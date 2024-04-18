@@ -15,8 +15,7 @@ on:
       - 'task-*'
   pull_request:
     branches:
-      - 'bug-*'
-      - 'task-*'
+      - main
 
 jobs:
   build:
