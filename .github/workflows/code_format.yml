@@ -1,0 +1,24 @@
+name: Format Java Code
+
+on:
+  push:
+    paths:
+      - '**.java'
+
+jobs:
+  format-java:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v2
+
+      - name: Format Java Code
+        uses: google/google-java-format-action@v1
+        id: format
+        with:
+          source-directory: '.'
+          skip-sort-imports: true
+
+      - name: Commit Formatted Files
+        if: steps.format.outputs.formatted_files != ''
+        uses: EndBug/git-add-and-commit@v5
