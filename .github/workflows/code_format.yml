@@ -2,23 +2,22 @@ name: Format Java Code
 
 on:
   push:
-    paths:
-      - '**.java'
+    branches:
+      - 'bug-*'
 
 jobs:
-  format-java:
+  format-code:
     runs-on: ubuntu-latest
+
     steps:
-      - name: Checkout Code
-        uses: actions/checkout@v2
+      - name: Checkout Repository
+        uses: actions/checkout@v3
 
-      - name: Format Java Code
-        uses: google/google-java-format-action@v1
-        id: format
+      - name: Prettier Java Format
+        uses: tsar-boomba/prettier-java-format-action@main
         with:
-          source-directory: '.'
-          skip-sort-imports: true
-
-      - name: Commit Formatted Files
-        if: steps.format.outputs.formatted_files != ''
-        uses: EndBug/git-add-and-commit@v5
+          prettier-args: '--tab-width 4  --write'  # See: https://prettier.io/docs/en/options.html
+          files: '**/*.java'
+          commit: 'true'
+          github-username: 'github-actions'
+          commit-message: 'Format Java Code'
